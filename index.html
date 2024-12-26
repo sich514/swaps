@@ -28,23 +28,29 @@
 
     <script>
         async function fetchTrades() {
-            const response = await fetch('/big-trades/');
-            const trades = await response.json();
+            try {
+                const response = await fetch('/big-trades/');
+                const trades = await response.json();
 
-            const tradesTable = document.getElementById('trades');
-            tradesTable.innerHTML = '';
+                const tradesTable = document.getElementById('trades');
+                tradesTable.innerHTML = ''; // Очищаем старые данные
 
-            trades.forEach(trade => {
-                const row = `<tr>
-                    <td>${trade.token}</td>
-                    <td>${trade.network}</td>
-                    <td>${trade.amountUSD}</td>
-                </tr>`;
-                tradesTable.innerHTML += row;
-            });
+                trades.forEach(trade => {
+                    const row = `<tr>
+                        <td>${trade.token}</td>
+                        <td>${trade.network}</td>
+                        <td>${trade.amountUSD}</td>
+                    </tr>`;
+                    tradesTable.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error fetching trades:", error);
+            }
         }
 
-        fetchTrades();
+        // Запрашиваем данные каждые 10 секунд
+        setInterval(fetchTrades, 10000);
+        fetchTrades(); // Первый запрос сразу при загрузке
     </script>
 </body>
 </html>
