@@ -16,8 +16,8 @@ app.add_middleware(
 )
 
 DEX_SCREENER_API_URL = "https://api.dexscreener.io/latest/dex/trades"
-NETWORKS = ["solana", "ethereum"]  # Сети
-THRESHOLD = 20000  # Порог суммы сделки
+NETWORKS = ["solana", "ethereum", "base"]  # Сети
+THRESHOLD = 10000  # Порог суммы сделки
 
 # Хранилище для данных о больших сделках
 big_trades = []
