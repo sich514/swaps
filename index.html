@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Trades Monitor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <h1>Big Trades Monitor</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Token</th>
+                <th>Network</th>
+                <th>Amount (USD)</th>
+            </tr>
+        </thead>
+        <tbody id="trades">
+            <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchTrades() {
+            const response = await fetch('/big-trades/');
+            const trades = await response.json();
+
+            const tradesTable = document.getElementById('trades');
+            tradesTable.innerHTML = '';
+
+            trades.forEach(trade => {
+                const row = `<tr>
+                    <td>${trade.token}</td>
+                    <td>${trade.network}</td>
+                    <td>${trade.amountUSD}</td>
+                </tr>`;
+                tradesTable.innerHTML += row;
+            });
+        }
+
+        fetchTrades();
+    </script>
+</body>
+</html>
